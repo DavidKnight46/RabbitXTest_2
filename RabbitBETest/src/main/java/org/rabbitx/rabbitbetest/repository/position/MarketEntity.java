@@ -13,4 +13,8 @@ public class MarketEntity {
 
     @Column(name = "marketname")
     private String marketName;
+
+    @OneToOne
+    @JoinColumn(name = "market")
+    private PositionEntity position;
 }

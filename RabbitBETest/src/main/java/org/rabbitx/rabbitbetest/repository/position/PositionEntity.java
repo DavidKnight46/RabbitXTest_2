@@ -3,6 +3,7 @@ package org.rabbitx.rabbitbetest.repository.position;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.rabbitx.rabbitbetest.models.TypeOfPosition;
+import org.rabbitx.rabbitbetest.repository.user.UserEntity;
 
 @Entity
 @Table(name = "positions")
@@ -19,13 +20,14 @@ public class PositionEntity {
     @Column(name = "typeofposition")
     private TypeOfPosition typeOfPosition;
 
-    //@Column(name = "market")
-    @OneToOne(mappedBy = "id")
-    private MarketEntity market;
-
     @Column(name = "isexecuted")
     boolean isExecuted;
 
     @Column
     int leverage;
+
+    @ManyToOne
+    @JoinColumn(name = "positionId")
+    private UserEntity positionuser;
+
 }

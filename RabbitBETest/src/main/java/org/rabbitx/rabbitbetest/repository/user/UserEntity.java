@@ -19,10 +19,19 @@ public class UserEntity {
     @Column(name = "username")
     private String userName;
 
-    @OneToMany(mappedBy = "id")
+    @Column
+    private long walletID;
+
+    @Column
+    private long positionId;
+
+    @OneToMany(mappedBy = "walletUser")
     private List<WalletEntity> wallets;
 
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "positionuser")
     private List<PositionEntity> positions;
+
+//    @OneToMany(mappedBy = "id")
+//    private List<PositionEntity> positions;
 
 }

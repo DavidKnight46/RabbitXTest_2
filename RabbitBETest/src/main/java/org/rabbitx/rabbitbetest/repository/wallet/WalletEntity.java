@@ -2,8 +2,7 @@ package org.rabbitx.rabbitbetest.repository.wallet;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
-import java.util.List;
+import org.rabbitx.rabbitbetest.repository.user.UserEntity;
 
 @Entity
 @Table(name = "wallets")
@@ -20,6 +19,7 @@ public class WalletEntity {
     @Column(name = "currentbalance")
     private double currentBalance;
 
-    @OneToMany(mappedBy = "id")
-    private List<Transactions> transactions;
+    @ManyToOne
+    @JoinColumn(name = "walletID", nullable = false)
+    private UserEntity walletUser;
 }

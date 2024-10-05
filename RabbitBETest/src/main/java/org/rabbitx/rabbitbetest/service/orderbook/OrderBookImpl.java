@@ -34,12 +34,12 @@ public class OrderBookImpl implements OrderBookI{
         }
 
         //TODO: check have a position on another market
-        long count = userRepository.findByUserName(user).get().getPositions().stream().filter(e -> !e.getMarket().getMarketName().contentEquals("")).count();
+        //long count = userRepository.findByUserName(user).get().getPositions().stream().filter(e -> !e.getMarket().getMarketName().contentEquals("")).count();
 
 
-        if(count >= 1){
-            //TODO: execute order i.e. change wallet balance, create transaction, position/trade is executed, calcuate margin
-        }
+//        if(count >= 1){
+//            //TODO: execute order i.e. change wallet balance, create transaction, position/trade is executed, calcuate margin
+//        }
 
 
 //        if(marginisbelow < 10){
