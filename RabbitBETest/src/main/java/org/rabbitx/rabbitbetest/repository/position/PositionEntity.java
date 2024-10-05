@@ -26,6 +26,12 @@ public class PositionEntity {
     @Column
     int leverage;
 
+    @Column(name = "marketid")
+    long marketId;
+
+    @OneToOne(mappedBy = "position")
+    MarketEntity market;
+
     @ManyToOne
     @JoinColumn(name = "positionId")
     private UserEntity positionuser;

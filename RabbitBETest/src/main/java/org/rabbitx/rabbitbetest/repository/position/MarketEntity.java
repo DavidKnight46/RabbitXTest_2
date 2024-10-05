@@ -15,6 +15,6 @@ public class MarketEntity {
     private String marketName;
 
     @OneToOne
-    @JoinColumn(name = "market")
+    @JoinColumn(name = "marketId", nullable = false)
     private PositionEntity position;
 }
