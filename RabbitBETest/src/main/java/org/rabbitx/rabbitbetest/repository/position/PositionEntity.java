@@ -21,16 +21,16 @@ public class PositionEntity {
     private TypeOfPosition typeOfPosition;
 
     @Column(name = "isexecuted")
-    boolean isExecuted;
+    private boolean isExecuted;
 
     @Column
-    int leverage;
+    private int leverage;
 
     @Column(name = "marketid")
-    long marketId;
+    private long marketId;
 
     @OneToOne(mappedBy = "position")
-    MarketEntity market;
+    private MarketEntity market;
 
     @ManyToOne
     @JoinColumn(name = "positionId")

@@ -31,7 +31,4 @@ public class UserEntity {
     @OneToMany(mappedBy = "positionuser")
     private List<PositionEntity> positions;
 
-//    @OneToMany(mappedBy = "id")
-//    private List<PositionEntity> positions;
-
 }

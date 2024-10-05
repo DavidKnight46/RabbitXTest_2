@@ -14,7 +14,7 @@ class OrderBookITest {
 
     @BeforeEach
     public void init(){
-        underTest = new OrderBookImpl(null);
+        underTest = new OrderBookImpl(null, null);
     }
 
     @Test

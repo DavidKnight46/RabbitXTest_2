@@ -23,9 +23,12 @@ public class Transactions {
     @Column(name = "isreverted")
     private boolean isReverted;
 
-    @Column(name = "")
+    @Column(name = "dateoftransaction")
     @Temporal(value = TemporalType.DATE)
     private LocalDate dateOfTransaction;
 
+    @ManyToOne
+    @JoinColumn(name = "transactionId" ,nullable = false)
+    private WalletEntity wallet;
 
 }

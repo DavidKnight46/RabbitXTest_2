@@ -14,6 +14,12 @@ public class MarketEntity {
     @Column(name = "marketname")
     private String marketName;
 
+    @Column(name = "currentmarketprice")
+    private double currentMarketPrice;
+
+    @Column(name = "entrymarketprice")
+    private double entryMarketPrice;
+
     @OneToOne
     @JoinColumn(name = "marketId", nullable = false)
     private PositionEntity position;
