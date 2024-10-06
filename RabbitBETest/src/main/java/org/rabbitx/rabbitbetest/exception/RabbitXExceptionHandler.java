@@ -26,11 +26,16 @@ public class RabbitXExceptionHandler extends ResponseEntityExceptionHandler {
         return createErrorResponse(e, request);
     }
 
+    @ExceptionHandler(BelowMarginException.class)
+    public ResponseEntity<Object> handleBelowMarginException(BelowMarginException e, WebRequest request){
+        return createErrorResponse(e, request);
+    }
+
     private ResponseEntity<Object> createErrorResponse(Exception e, WebRequest request) {
         return handleExceptionInternal(e,
                 e.getMessage(),
                 HttpHeaders.EMPTY,
-                HttpStatus.NOT_FOUND,
+                HttpStatus.INTERNAL_SERVER_ERROR,
                 request);
     }
 }

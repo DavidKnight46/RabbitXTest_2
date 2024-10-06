@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.rabbitx.rabbitbetest.repository.user.UserEntity;
 
-import java.util.List;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "wallets")
@@ -28,6 +28,6 @@ public class WalletEntity {
     @JoinColumn(name = "walletID", nullable = false)
     private UserEntity walletUser;
 
-    @OneToMany(mappedBy = "")
-    private List<Transactions> transactions;
+    @OneToMany(mappedBy = "wallet")
+    private ArrayList<Transactions> transactions;
 }

@@ -1,6 +1,8 @@
 package org.rabbitx.rabbitbetest.service.orderbook;
 
+import org.rabbitx.rabbitbetest.exception.BelowMarginException;
 import org.rabbitx.rabbitbetest.exception.InsufficientBalanceInWalletException;
+import org.rabbitx.rabbitbetest.exception.MarketNotFoundException;
 import org.rabbitx.rabbitbetest.exception.NoUserFoundException;
 import org.rabbitx.rabbitbetest.models.NewTrade;
 import org.rabbitx.rabbitbetest.models.TransactionType;
@@ -23,11 +25,26 @@ public class OrderBookImpl implements OrderBookI{
 
     private final UserRepository userRepository;
     private final MarketRepository marketRepository;
+    private static volatile Integer marginLimit;
+    private static volatile Integer leverage;
 
     public OrderBookImpl(UserRepository userRepository,
-                         MarketRepository marketRepository){
+                         MarketRepository marketRepository,
+                         Integer getLimit,
+                         Integer getLeverage){
         this.userRepository = userRepository;
         this.marketRepository = marketRepository;
+        marginLimit = getLimit;
+        leverage = getLeverage;
+    }
+
+    @Override
+    public List<PositionEntity> getAllPositions(String user) {
+        if(userRepository.findByUserName(user).isPresent()) {
+            return userRepository.findByUserName(user).get().getPositions();
+        } else {
+            throw new NoUserFoundException(user + " not found.");
+        }
     }
 
     @Transactional
@@ -56,7 +73,7 @@ public class OrderBookImpl implements OrderBookI{
         if(hasPositionOnOtherMarket){
             var activeWallet = walletsList
                     .stream()
-                    .filter(e -> e.getWalletName().contentEquals(newTrade.marketName()))
+                    .filter(e -> e.getWalletName().contentEquals(walletName))
                     .findFirst()
                     .get();
 
@@ -69,9 +86,10 @@ public class OrderBookImpl implements OrderBookI{
 
             PositionEntity newPosition = new PositionEntity();
             newPosition.setExecuted(true);
-            newPosition.setLeverage(10);
+            newPosition.setLeverage(leverage);
 
-            activeUserEntity.getPositions().add(newPosition);
+            List<PositionEntity> positions = activeUserEntity.getPositions();//;.add(newPosition);
+            positions.add(newPosition);
 
             MarketEntity selectedMarketToTrade;
 
@@ -79,21 +97,24 @@ public class OrderBookImpl implements OrderBookI{
                 selectedMarketToTrade = marketRepository.findByMarketName(newTrade.marketName()).get();
                 newPosition.setMarketId(marketRepository.findByMarketName(newTrade.marketName()).get().getId());
             } else {
-                throw new ArithmeticException();
+                throw new MarketNotFoundException(newTrade.marketName() + " does not exist.");
             }
 
             userRepository.findByUserName(activeUser).get().getPositions().add(newPosition);
 
-            if(calcuateAccountMargin(newTrade, activeWallet, selectedMarketToTrade.getCurrentMarketPrice()) < 10){
+            if(calcuateAccountMargin(newTrade, activeWallet, selectedMarketToTrade.getCurrentMarketPrice()) < marginLimit){
                 createNewTransaction(newTrade, true, activeWallet);
-                throw new IllegalArgumentException();
+                throw new BelowMarginException("Margin is below limit. Transaction reverted.");
             } else {
                 createNewTransaction(newTrade, false, activeWallet);
 
                 userRepository.save(activeUserEntity);
             }
+        } else {
+            throw new MarketNotFoundException("There is no other market.");
         }
     }
+
     private void createNewTransaction(NewTrade newTrade, boolean isReverted, WalletEntity activeWallet) {
         Transactions transactions = new Transactions();
         transactions.setAmount(newTrade.sizeOfPosition());
@@ -116,12 +137,12 @@ public class OrderBookImpl implements OrderBookI{
     }
 
     private double calcuateUnrealisedPNL(TypeOfPosition side, double sizeOfPosition, double currentMarketValue) {
-        var value = switch (side){
+        var sideValue = switch (side){
             case LONG -> 1;
             case SHORT -> -1;
         };
 
-        return value * sizeOfPosition * currentMarketValue;
+        return sideValue * sizeOfPosition * currentMarketValue;
     }
 
     private double calcuateAccountEquity(double walletBalance, double unrealisedPNL) {

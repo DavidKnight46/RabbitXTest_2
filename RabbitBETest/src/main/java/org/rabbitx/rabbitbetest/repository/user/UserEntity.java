@@ -5,6 +5,7 @@ import lombok.Data;
 import org.rabbitx.rabbitbetest.repository.position.PositionEntity;
 import org.rabbitx.rabbitbetest.repository.wallet.WalletEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -29,6 +30,6 @@ public class UserEntity {
     private List<WalletEntity> wallets;
 
     @OneToMany(mappedBy = "positionuser")
-    private List<PositionEntity> positions;
+    private ArrayList<PositionEntity> positions;
 
 }

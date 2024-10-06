@@ -1,12 +1,12 @@
 package org.rabbitx.rabbitbetest.controller;
 
 import org.rabbitx.rabbitbetest.models.NewTrade;
+import org.rabbitx.rabbitbetest.repository.position.PositionEntity;
 import org.rabbitx.rabbitbetest.service.orderbook.OrderBookI;
 import org.rabbitx.rabbitbetest.service.orderbook.OrderBookImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -22,13 +22,14 @@ public class OrderBookController {
     @PostMapping("/placeAPosition")
     @ResponseStatus(HttpStatus.OK)
     public void placeAPosition(@RequestParam String user,
-                               @RequestParam String wallet){
-
+                               @RequestParam String wallet,
+                               @RequestBody NewTrade incomingTrade){
+        orderBook.processAnOrder(user, wallet, incomingTrade);
     }
 
     @GetMapping("/getOrderBook")
     @ResponseStatus(HttpStatus.OK)
-    public List<NewTrade> getOrderBook(@RequestParam String user){
-        return Collections.emptyList();
+    public List<PositionEntity> getOrderBook(@RequestParam String user){
+        return orderBook.getAllPositions(user);
     }
 }

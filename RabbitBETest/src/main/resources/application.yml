@@ -2,6 +2,9 @@ server:
   servlet:
     context-path: /api/rabbitx/v1/
 
+margin:
+  limit: 10
+
 spring:
   datasource:
     url: jdbc:h2:mem:rabbitxorderbook
@@ -10,3 +13,12 @@ spring:
     driverClassName: org.h2.Driver
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
+
+---
+spring:
+  profiles:
+    active: test
+
+margin:
+  limit: 1
+  leverage: 10
