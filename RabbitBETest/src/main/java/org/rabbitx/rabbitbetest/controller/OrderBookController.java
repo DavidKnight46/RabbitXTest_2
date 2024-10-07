@@ -21,9 +21,9 @@ public class OrderBookController {
 
     @PostMapping("/placeAPosition")
     @ResponseStatus(HttpStatus.OK)
-    public void placeAPosition(@RequestParam String user,
-                               @RequestParam String wallet,
-                               @RequestBody NewTrade incomingTrade){
+    public void processATrade(@RequestParam String user,
+                              @RequestParam String wallet,
+                              @RequestBody NewTrade incomingTrade){
         orderBook.processAnOrder(user, wallet, incomingTrade);
     }
 
