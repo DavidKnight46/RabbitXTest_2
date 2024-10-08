@@ -12,7 +12,7 @@ public class PositionEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private int id;
 
     @Column(name = "sizeofposition")
     private double sizeOfPosition;
@@ -27,7 +27,7 @@ public class PositionEntity {
     private int leverage;
 
     @Column(name = "marketid")
-    private long marketId;
+    private int marketId;
 
     @OneToOne(mappedBy = "position")
     private MarketEntity market;

@@ -129,7 +129,7 @@ class OrderBookITest {
 
     private MarketEntity createMarket(){
         MarketEntity marketEntity = new MarketEntity();
-        marketEntity.setId(1l);
+        marketEntity.setId(1);
 
         return marketEntity;
     }

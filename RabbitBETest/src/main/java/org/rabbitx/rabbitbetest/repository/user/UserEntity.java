@@ -5,6 +5,7 @@ import lombok.Data;
 import org.rabbitx.rabbitbetest.repository.position.PositionEntity;
 import org.rabbitx.rabbitbetest.repository.wallet.WalletEntity;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,16 +16,16 @@ public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private int id;
 
     @Column(name = "username")
     private String userName;
 
-    @Column
-    private long walletID;
+    @Column(name = "walletid")
+    private int walletId;
 
-    @Column
-    private long positionId;
+    @Column(name = "positionid")
+    private int positionId;
 
     @OneToMany(mappedBy = "walletUser")
     private List<WalletEntity> wallets;

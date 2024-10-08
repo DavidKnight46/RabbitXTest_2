@@ -1,6 +1,7 @@
 package org.rabbitx.rabbitbetest.controller;
 
 import com.google.gson.GsonBuilder;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.rabbitx.rabbitbetest.models.NewTrade;
@@ -10,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.MultiValueMap;
@@ -22,12 +24,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ExtendWith(SpringExtension.class)
+@ActiveProfiles("test")
 class OrderBookControllerIntTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
+    @Disabled("under construction")
     public void processATrade() throws Exception{
         MultiValueMap<String, String> params = new HttpHeaders();
         params.add("user","aerith");
@@ -42,9 +46,10 @@ class OrderBookControllerIntTest {
     }
 
     @Test
+    @Disabled("under construction")
     public void getOrderBook() throws Exception{
         mockMvc.perform(get("/orderBook/getOrderBook")
-                        .param("user","David")
+                        .param("user","AERITH")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());

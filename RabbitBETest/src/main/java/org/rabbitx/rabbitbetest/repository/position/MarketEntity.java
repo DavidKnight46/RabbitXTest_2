@@ -9,7 +9,7 @@ import lombok.Data;
 public class MarketEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private int id;
 
     @Column(name = "marketname")
     private String marketName;

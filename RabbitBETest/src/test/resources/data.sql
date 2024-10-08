@@ -1,0 +1,1 @@
+INSERT INTO users (id, walletid, positionid, username) VALUES (1,1,1, 'AERITH');

@@ -40,6 +40,8 @@ public class OrderBookImpl implements OrderBookI{
 
     @Override
     public List<PositionEntity> getAllPositions(String user) {
+        Iterable<UserEntity> all = userRepository.findAll();
+
         if(userRepository.findByUserName(user).isPresent()) {
             return userRepository.findByUserName(user).get().getPositions();
         } else {
@@ -50,6 +52,7 @@ public class OrderBookImpl implements OrderBookI{
     @Transactional
     @Override
     public void processAnOrder(String activeUser, String walletName, NewTrade newTrade) {
+        System.out.println("smurf");
         List<WalletEntity> walletsList;
 
         if(userRepository.findByUserName(activeUser).isPresent()){
