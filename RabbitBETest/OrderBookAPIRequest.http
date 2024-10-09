@@ -1,0 +1,8 @@
+### GET request to example server
+POST http://localhost:9006/api/rabbitx/v1/orderBook/placeAPosition?user=aerith&wallet=zackswallet
+content-type: application/json
+
+
+{"sizeOfPosition": 1.0, "type": "SHORT", "marketName": "WALLMARKET", "isExecuted": false}
+
+###
