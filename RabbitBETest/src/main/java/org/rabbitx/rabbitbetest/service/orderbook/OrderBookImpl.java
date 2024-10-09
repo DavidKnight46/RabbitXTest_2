@@ -5,6 +5,7 @@ import org.rabbitx.rabbitbetest.exception.InsufficientBalanceInWalletException;
 import org.rabbitx.rabbitbetest.exception.MarketNotFoundException;
 import org.rabbitx.rabbitbetest.exception.NoUserFoundException;
 import org.rabbitx.rabbitbetest.models.NewTrade;
+import org.rabbitx.rabbitbetest.models.OrderBook;
 import org.rabbitx.rabbitbetest.models.TransactionType;
 import org.rabbitx.rabbitbetest.models.TypeOfPosition;
 import org.rabbitx.rabbitbetest.repository.position.MarketEntity;
@@ -39,14 +40,21 @@ public class OrderBookImpl implements OrderBookI{
     }
 
     @Override
-    public List<PositionEntity> getAllPositions(String user) {
-        Iterable<UserEntity> all = userRepository.findAll();
-
+    public List<OrderBook> getAllPositions(String user) {
         if(userRepository.findByUserName(user).isPresent()) {
-            return userRepository.findByUserName(user).get().getPositions();
+            return userRepository.findByUserName(user)
+                    .stream()
+                    .map(this::createOrderBook)
+                    .toList();
         } else {
             throw new NoUserFoundException(user + " not found.");
         }
+    }
+
+    private OrderBook createOrderBook(UserEntity user){
+        return new OrderBook(user.getUserName(),
+                user.getWallets(),
+                user.getPositions());
     }
 
     @Transactional

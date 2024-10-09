@@ -1,7 +1,7 @@
 package org.rabbitx.rabbitbetest.controller;
 
 import org.rabbitx.rabbitbetest.models.NewTrade;
-import org.rabbitx.rabbitbetest.repository.position.PositionEntity;
+import org.rabbitx.rabbitbetest.models.OrderBook;
 import org.rabbitx.rabbitbetest.service.orderbook.OrderBookI;
 import org.rabbitx.rabbitbetest.service.orderbook.OrderBookImpl;
 import org.springframework.http.HttpStatus;
@@ -29,7 +29,7 @@ public class OrderBookController {
 
     @GetMapping("/getOrderBook")
     @ResponseStatus(HttpStatus.OK)
-    public List<PositionEntity> getOrderBook(@RequestParam String user){
+    public List<OrderBook> getOrderBook(@RequestParam String user){
         return orderBook.getAllPositions(user);
     }
 }

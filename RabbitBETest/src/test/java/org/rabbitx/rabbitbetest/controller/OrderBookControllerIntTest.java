@@ -27,15 +27,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 class OrderBookControllerIntTest {
 
+    private final String USER_NAME="aerith";
+    private final String USER_PARAM = "user";
+
     @Autowired
     private MockMvc mockMvc;
 
     @Test
     //@Disabled("under construction")
     public void processATrade() throws Exception{
+        String walletParam = "wallet";
+        String walletName = "zackswallet";
+
         MultiValueMap<String, String> params = new HttpHeaders();
-        params.add("user","aerith");
-        params.add("wallet", "zackswallet");
+        params.add(USER_PARAM,USER_NAME);
+        params.add(walletParam, walletName);
 
         mockMvc.perform(post("/orderBook/placeAPosition")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -46,10 +52,9 @@ class OrderBookControllerIntTest {
     }
 
     @Test
-    @Disabled("under construction")
     public void getOrderBook() throws Exception{
         mockMvc.perform(get("/orderBook/getOrderBook")
-                        .param("user","aerith")
+                        .param(USER_PARAM,USER_NAME)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());
