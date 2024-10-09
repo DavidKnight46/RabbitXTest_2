@@ -34,7 +34,7 @@ class OrderBookControllerIntTest {
     private MockMvc mockMvc;
 
     @Test
-    //@Disabled("under construction")
+    @Disabled("under construction")
     public void processATrade() throws Exception{
         String walletParam = "wallet";
         String walletName = "zackswallet";

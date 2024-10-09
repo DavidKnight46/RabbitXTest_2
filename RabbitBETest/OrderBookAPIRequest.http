@@ -1,5 +1,5 @@
 ### GET request to example server
-POST http://localhost:9006/api/rabbitx/v1/orderBook/placeAPosition?user=AERITH&wallet=zackswallet
+POST http://localhost:9006/api/rabbitx/v1/orderBook/placeAPosition?user=aerith&wallet=zackswallet
 content-type: application/json
 
 
