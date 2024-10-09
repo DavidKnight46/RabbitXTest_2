@@ -52,7 +52,6 @@ public class OrderBookImpl implements OrderBookI{
     @Transactional
     @Override
     public void processAnOrder(String activeUser, String walletName, NewTrade newTrade) {
-        System.out.println("smurf");
         List<WalletEntity> walletsList;
 
         if(userRepository.findByUserName(activeUser).isPresent()){

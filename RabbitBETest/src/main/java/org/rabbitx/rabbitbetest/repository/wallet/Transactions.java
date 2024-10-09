@@ -12,7 +12,7 @@ public class Transactions {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private int id;
 
     @Column
     private double amount;
@@ -28,7 +28,12 @@ public class Transactions {
     private LocalDate dateOfTransaction;
 
     @ManyToOne
-    @JoinColumn(name = "transactionId" ,nullable = false)
+    @JoinColumn(name = "transactionid" ,nullable = false)
     private WalletEntity wallet;
+
+    @Override
+    public String toString(){
+        return "{" + id + "}";
+    }
 
 }

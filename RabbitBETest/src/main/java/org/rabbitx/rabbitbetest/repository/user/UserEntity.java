@@ -5,8 +5,6 @@ import lombok.Data;
 import org.rabbitx.rabbitbetest.repository.position.PositionEntity;
 import org.rabbitx.rabbitbetest.repository.wallet.WalletEntity;
 
-import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,10 +25,15 @@ public class UserEntity {
     @Column(name = "positionid")
     private int positionId;
 
-    @OneToMany(mappedBy = "walletUser")
+    @OneToMany(mappedBy = "walletuser")
     private List<WalletEntity> wallets;
 
     @OneToMany(mappedBy = "positionuser")
-    private ArrayList<PositionEntity> positions;
+    private List<PositionEntity> positions;
+
+    @Override
+    public String toString(){
+        return "{" + userName + "}";
+    }
 
 }

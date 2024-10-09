@@ -21,6 +21,6 @@ public class MarketEntity {
     private double entryMarketPrice;
 
     @OneToOne
-    @JoinColumn(name = "marketId", nullable = false)
+    @JoinColumn(name = "marketid", nullable = false)
     private PositionEntity position;
 }

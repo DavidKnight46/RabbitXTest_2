@@ -31,11 +31,11 @@ class OrderBookControllerIntTest {
     private MockMvc mockMvc;
 
     @Test
-    @Disabled("under construction")
+    //@Disabled("under construction")
     public void processATrade() throws Exception{
         MultiValueMap<String, String> params = new HttpHeaders();
         params.add("user","aerith");
-        params.add("wallet", "zackwallet");
+        params.add("wallet", "zackswallet");
 
         mockMvc.perform(post("/orderBook/placeAPosition")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -49,13 +49,13 @@ class OrderBookControllerIntTest {
     @Disabled("under construction")
     public void getOrderBook() throws Exception{
         mockMvc.perform(get("/orderBook/getOrderBook")
-                        .param("user","AERITH")
+                        .param("user","aerith")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
 
     private String createNewTrade(){
-        return new GsonBuilder().create().toJson(new NewTrade(1.0, TypeOfPosition.SHORT, "MARKET", false));
+        return new GsonBuilder().create().toJson(new NewTrade(1.0, TypeOfPosition.SHORT, "WALLMARKET", false));
     }
 }

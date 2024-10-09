@@ -33,7 +33,12 @@ public class PositionEntity {
     private MarketEntity market;
 
     @ManyToOne
-    @JoinColumn(name = "positionId")
+    @JoinColumn(name = "positionid", nullable = false)
     private UserEntity positionuser;
+
+    @Override
+    public String toString(){
+        return "{" + id + "}";
+    }
 
 }

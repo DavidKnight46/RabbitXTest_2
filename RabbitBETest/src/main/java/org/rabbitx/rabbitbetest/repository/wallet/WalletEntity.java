@@ -5,6 +5,7 @@ import lombok.Data;
 import org.rabbitx.rabbitbetest.repository.user.UserEntity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "wallets")
@@ -13,7 +14,7 @@ public class WalletEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private int id;
 
     @Column(name = "walletname")
     private String walletName;
@@ -21,13 +22,18 @@ public class WalletEntity {
     @Column(name = "currentbalance")
     private double currentBalance;
 
-    @Column
-    private long transactionId;
-
-    @ManyToOne
-    @JoinColumn(name = "walletID", nullable = false)
-    private UserEntity walletUser;
+    @Column(name = "transactionid")
+    private int transactionId;
 
     @OneToMany(mappedBy = "wallet")
-    private ArrayList<Transactions> transactions;
+    private List<Transactions> transactions;
+
+    @ManyToOne
+    @JoinColumn(name = "walletid", nullable = false)
+    private UserEntity walletuser;
+
+    @Override
+    public String toString(){
+        return "{" + walletName + "}";
+    }
 }
